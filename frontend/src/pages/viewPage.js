@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Review from "../components/Review";
 import "../App.css";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,8 @@ import DetailHeader from "../components/DetailHeader";
 import TypeSelect from "../components/TypeSelect";
 import Navigation from "../components/Navigation";
 
+
+// TODO 리뷰 페이지로 이동
 const CheckBoxInput = styled.input`
 	display: none;
 	&:checked + label {
@@ -40,12 +42,12 @@ const CheckBoxLabel = styled.label`
 
 function View() {
 	const params = useParams();
-	const restaurant = params.restaurant;
+	const restaurant = parseInt(params.restaurant);
 	return (
 		<>
 			<div className="App2">
 				<DetailHeader idx={restaurant - 1} rate={50} />
-				{restaurant == 1 ? null : <TypeSelect idx={restaurant} />}
+				{restaurant === 1 ? null : <TypeSelect idx={restaurant} />}
 				<Review />
 				{/* <CheckBoxInput type="checkbox" id="check" />
 				<CheckBoxLabel htmlFor="check"></CheckBoxLabel> */}
