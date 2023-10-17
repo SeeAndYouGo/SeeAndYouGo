@@ -3,8 +3,6 @@ package com.SeeAndYouGo.SeeAndYouGo.review;
 import com.SeeAndYouGo.SeeAndYouGo.Menu.Menu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -85,7 +83,7 @@ public class ReviewRepository {
                 .getResultList();
     }
 
-//    
+
 
     public List<Review> findTopReviewsByRestaurantAndDate(String restaurantName, String date) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

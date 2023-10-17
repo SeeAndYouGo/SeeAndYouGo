@@ -32,13 +32,13 @@ public class ReviewService {
         return review.getId();
     }
 
-    @Transactional
-    public void deleteReview(Long reviewId) {
-        Review review = reviewRepository.findOne(reviewId);
-        if (review != null) {
-            reviewRepository.delete(review);
-        }
-    }
+//    @Transactional
+//    public void deleteReview(Long reviewId) {
+//        Review review = reviewRepository.findOne(reviewId);
+//        if (review != null) {
+//            reviewRepository.delete(review);
+//        }
+//    }
 
 
     public Review findOne(Long id) {
@@ -96,7 +96,7 @@ public class ReviewService {
     public List<Review> findTopReviewsByRestaurantAndDate(String restaurantName, String date) {
         return reviewRepository.findTopReviewsByRestaurantAndDate(restaurantName, date);
     }
-    public void delete(Review review) {
-        reviewRepository.delete(review);
-    }
+//    public void delete(Review review) {
+//        reviewRepository.delete(review);
+//    }
 }

@@ -45,13 +45,13 @@ public class ReviewController {
 
 
     // 리뷰 삭제
-    @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<String> deleteReview(@PathVariable Long reviewId) {
-        Review review = reviewService.findOne(reviewId);
-        if (review == null) {
-            return ResponseEntity.notFound().build();
-        }
-        reviewService.delete(review);
-        return ResponseEntity.ok("Review deleted successfully.");
-    }
+//    @DeleteMapping("/review/{reviewId}")
+//    public ResponseEntity<String> deleteReview(@PathVariable Long reviewId) {
+//        Review review = reviewService.findOne(reviewId);
+//        if (review == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        reviewService.delete(review);
+//        return ResponseEntity.ok("Review deleted successfully.");
+//    }
 }
