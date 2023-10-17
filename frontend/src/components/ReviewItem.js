@@ -3,7 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-
+import moment from "moment";
 // const ReviewItemContainer = styled.div`
 //     /* display: flex;
 //     flex-direction: column;
@@ -111,7 +111,18 @@ const ReviewItemContent = styled.p`
 	margin: 5px 0;
 `;
 
+const CalculateWriteTime = (inputTime, nowTime) => {
+	const checkMinutes = moment.duration(inputTime.diff(nowTime)).asMinutes();
+	if (checkMinutes < 60) {
+		return `${Math.floor(checkMinutes)}분 전`;
+	} else {
+		return `${Math.floor(checkMinutes / 60)}시간 전`;
+	}
+};
+
 const ReviewItem = ({ user, time, content, img, rate }) => {
+	const targetTime = moment("2023-10-14 15:00:00");
+
 	return (
 		<>
 			<ReviewItemContainer>
@@ -126,22 +137,26 @@ const ReviewItem = ({ user, time, content, img, rate }) => {
 								<FontAwesomeIcon icon={solidStar} />
 								{rate}
 							</ReviewItemStar>
-							<span style={{ fontWeight: 400 }}>{time}분 전</span>
+							<span style={{ fontWeight: 400 }}>
+								{CalculateWriteTime(targetTime, time)}
+							</span>
 						</div>
 					</ReviewItemProfile>
 				</div>
 				<div className="Row2" style={{ float: "left", width: "100%" }}>
 					<ReviewItemContent>{content}</ReviewItemContent>
-					<img
-						src={`/assets/images/${img}`}
-						alt="Loading.."
-						style={{
-							maxHeight: 80,
-							maxWidth: 80,
-							float: "left",
-							marginTop: 5,
-						}}
-					></img>
+					{img === "" ? null : (
+						<img
+							src={`/assets/images/${img}`}
+							alt="Loading.."
+							style={{
+								maxHeight: 80,
+								maxWidth: 80,
+								float: "left",
+								marginTop: 5,
+							}}
+						/>
+					)}
 				</div>
 			</ReviewItemContainer>
 		</>

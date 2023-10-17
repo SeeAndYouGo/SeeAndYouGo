@@ -56,6 +56,9 @@ const SortingSelect = styled.select`
 
 const ReviewList = () => {
 	const [review, setReview] = useState([]);
+	const [isChecked, setIsChecked] = useState(false);
+	const [sortOrder, setSortOrder] = useState("latest");
+
 	useEffect(() => {
 		const fetchData = async () => {
 			// "http:localhost:8080/"
@@ -73,37 +76,66 @@ const ReviewList = () => {
 		});
 	}, []);
 
+	const toggleOnlyImageReviewVisiblity = () => {
+		setIsChecked(!isChecked);
+	};
+
+	// 리뷰 정렬 구현하는 곳으로 지금은 최신 순, 오래된 순만 구현된 상황
+	const handleSortChange = (event) => {
+		const selectedSortOrder = event.target.value;
+		setSortOrder(selectedSortOrder);
+
+		if (selectedSortOrder === "latest") {
+			setReview([...review].sort((a, b) => new Date(b.madeTime) - new Date(a.madeTime)));
+		} else if (selectedSortOrder === "earliest") {
+			setReview([...review].sort((a, b) => new Date(a.madeTime) - new Date(b.madeTime)));
+		} else if (selectedSortOrder === "highRate") {
+			setReview([...review].sort((a, b) => b.rate - a.rate));
+		} else if (selectedSortOrder === "lowRate") {
+			setReview([...review].sort((a, b) => a.rate - b.rate));
+		}
+	};
+
 	return (
 		<>
 			<div>
-				<CheckBoxInput type="checkbox" id="check" />
+				<CheckBoxInput
+					type="checkbox"
+					id="check"
+					onChange={toggleOnlyImageReviewVisiblity}
+				/>
 				<CheckBoxLabel htmlFor="check" />
-				<label htmlFor="check" style={{ marginLeft: 5, cursor:"pointer" }}>
+				<label
+					htmlFor="check"
+					style={{ marginLeft: 5, cursor: "pointer" }}
+				>
 					사진 리뷰만 보기
 				</label>
-				<SortingSelect>
+				<SortingSelect value={sortOrder} onChange={handleSortChange}>
 					<option value="latest">최근 등록순</option>
-					<option value="ealiest">오래된순</option>
-					<option value="like">좋아요 많은순</option>
+					<option value="earliest">오래된순</option>
 					<option value="lowRate">별점 낮은순</option>
 					<option value="highRate">별점 높은순</option>
+					{/* <option value="like">좋아요 많은순</option> */}
 				</SortingSelect>
+
+				{review.map((nowReview, idx) => {
+					if (isChecked && nowReview.image === "") {
+						return null;
+					}
+					return (
+						<ReviewItem
+							user={nowReview.writer}
+							time={nowReview.madeTime}
+							rate={nowReview.rate}
+							content={nowReview.comment}
+							img={nowReview.image}
+							key={idx}
+						/>
+					);
+				})}
 			</div>
-			<div style={{marginBottom:30}}>
-				{review.map((nowReview, idx) => (
-					<ReviewItem
-						user={nowReview.writer}
-						time={nowReview.madeTime}
-						rate={nowReview.rate}
-						content={nowReview.comment}
-						img={nowReview.image}
-						key={idx}
-					/>
-				))}
-			</div>
-			<div className="blankSpace">
-				&nbsp;
-			</div>
+			<div className="blankSpace">&nbsp;</div>
 		</>
 	);
 };
