@@ -2,15 +2,19 @@ package com.SeeAndYouGo.SeeAndYouGo.Restaurant;
 
 import com.SeeAndYouGo.SeeAndYouGo.Connection.Connection;
 import com.SeeAndYouGo.SeeAndYouGo.Menu.Menu;
+import com.SeeAndYouGo.SeeAndYouGo.Review.Review;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Restaurant {
     @Id @GeneratedValue
     @Column(name = "restaurant_id")
@@ -18,14 +22,22 @@ public class Restaurant {
     private String name;
     private Integer capacity;
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
-    private List<Menu> menuList;
+    private List<Menu> menuList = new ArrayList<>();
     private String date;
     @OneToMany(mappedBy = "connection", cascade = CascadeType.ALL)
-    private List<Connection> connectionList;
+    private List<Connection> connectionList = new ArrayList<>();
     private Double restaurantRate;
     private Double latitude;
     private Double longitude;
-    private List<Review> reviewList;
+    private List<Review> reviewList = new ArrayList<>();
+
+    public Restaurant(String name, String date) {
+        this.setName(name);
+        this.setDate(date);
+        setLatitude(name);
+        setLongitude(name);
+
+    }
 
     private void setLatitude(String name){
         if(name.contains("1학")) latitude = 1.1;

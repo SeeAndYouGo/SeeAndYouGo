@@ -79,7 +79,7 @@ public class DishService {
                 Restaurant restaurant = restaurantService.getRestaurantIfExistElseCreate(restaurantName, objDate.toString());
                 Dish dish = new Dish(menuName, dept, objDate.toString(), DishType.SIDE, restaurant, menuType, price);
                 dishes.add(dish);
-            }else break;
+            }else continue;
         }
         // 오늘 날짜의 Dish를 만들었으면, 이걸 기준으로 Menu를 만든다.
         List<Menu> menus = menuService.createMenuWithDishses(dishes);
