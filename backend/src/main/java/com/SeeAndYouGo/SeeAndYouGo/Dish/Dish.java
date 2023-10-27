@@ -10,10 +10,10 @@ import javax.persistence.*;
 public class Dish {
     @Id @GeneratedValue
     @Column(name = "dish_id")
-    private Long id;
+    public Long id;
 
-    private String name;
+    public String name;
 
     @Enumerated(EnumType.STRING)
-    private DishType dishType;
+    public DishType dishType;
 }

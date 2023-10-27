@@ -12,12 +12,12 @@ import javax.persistence.*;
 public class Connection {
     @Id @GeneratedValue
     @Column(name = "connection_id")
-    private Long id;
+    public Long id;
 
-    private Integer connected;
+    public Integer connected;
 
-    private String time;
+    public String time;
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant;
+    public Restaurant restaurant;
 }

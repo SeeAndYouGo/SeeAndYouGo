@@ -15,7 +15,7 @@ public class Menu {
     @Id
     @GeneratedValue
     @Column(name = "menu_id")
-    private Long id;
+    public Long id;
     @OneToMany
-    private List<Review> reviewLinkedList = new ArrayList<>();
+    public List<Review> reviewLinkedList = new ArrayList<>();
 }
