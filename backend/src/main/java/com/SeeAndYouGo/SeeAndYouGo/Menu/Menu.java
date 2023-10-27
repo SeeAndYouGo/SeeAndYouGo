@@ -17,8 +17,6 @@ public class Menu {
     @Column(name = "menu_id")
     private Long id;
 
-    private String name;
-
     private Integer price;
 
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
@@ -36,7 +34,7 @@ public class Menu {
     @Enumerated(EnumType.STRING)
     private Dept dept;
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private MenuType menuType;
 
     // 메뉴 문자열을 설정하는 메서드
 //    public void setMenu(List<Dish> dishList) {
