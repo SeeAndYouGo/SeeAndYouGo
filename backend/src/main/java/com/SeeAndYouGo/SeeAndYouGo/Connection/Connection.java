@@ -30,7 +30,11 @@ public class Connection {
         connection.setConnected(connected);
         connection.setTime(time);
         connection.setRestaurant(restaurant);
-
         return connection;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+        restaurant.getConnectionList().add(this);
     }
 }
