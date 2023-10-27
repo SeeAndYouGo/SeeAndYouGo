@@ -1,5 +1,7 @@
 package com.SeeAndYouGo.SeeAndYouGo.Connection;
 
+import com.SeeAndYouGo.SeeAndYouGo.Restaurant.Restaurant;
+import com.SeeAndYouGo.SeeAndYouGo.Restaurant.RestaurantRepository;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,7 +23,7 @@ import static com.SeeAndYouGo.SeeAndYouGo.Connection.Connection.createNewConnect
 @RequiredArgsConstructor
 public class ConnectionService {
     private final ConnectionRepository connectionRepository;
-    private final RestaurantService restaurantService;
+    private final RestaurantRepository restaurantRepository;
 
     public Connection getRecentConnected(String restaurantName){
         String changeRestaurantName = changeRestaurantName(restaurantName);
@@ -39,6 +41,9 @@ public class ConnectionService {
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = jsonParser.parse(wifiInfo).getAsJsonObject();
         JsonObject jsonWithRestaurantInfo = CashJsonWithRestaurantInfo(jsonObject);
+
+        if(jsonWithRestaurantInfo.size() == 0) return;
+
         JsonArray finalResult = new JsonArray();
         for (String location : jsonWithRestaurantInfo.keySet()) {
             JsonObject locationInfo = new JsonObject();
@@ -56,21 +61,45 @@ public class ConnectionService {
         }
 
         String today = time.split(" ")[0];
-        // 여기서 Connection에 해당하는 Restaurant를 찾아야한다!!
-
 
         for (JsonElement jsonElement : finalResult) {
             JsonObject asJsonObject = jsonElement.getAsJsonObject();
-            JsonElement name = asJsonObject.get("name");
+            String rawName = asJsonObject.get("name").toString();
+            String name = removeQuotes(rawName);
             // 오늘 날짜의 학생식당에 해당하는 DB 값이 있는지 확인하고 있다면 가져오고, 없다면 생성하자.
-            restaurantService.findTodayRestaurant(name, today);
+            Restaurant restaurant = getRestaurantIfExistElseCreate(name, today);
+
             // 만약 여기에 데이터가 없다면, restaurant를 새로 생성. 있다면, restaurant의 connection에 add하자.
-
-
             Integer connected = asJsonObject.get("connected").getAsInt();
 
-            Connection connectedTable = createNewConnection(connected, time, restaurant);
-            connectionRepository.save(connectedTable);
+            Connection connection = createNewConnection(connected, time, restaurant);
+            connectionRepository.save(connection);
+        }
+    }
+
+    public static String removeQuotes(String input) {
+        // 만약 입력 문자열에 큰따옴표가 없다면 원래 문자열 반환
+        if (!input.contains("\"")) {
+            return input;
+        }
+        // 큰따옴표를 제거한 문자열 생성
+        StringBuilder result = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            if (c != '"') {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+
+    private Restaurant getRestaurantIfExistElseCreate(String name, String today) {
+        Long aLong = restaurantRepository.countNumberOfDataInDate(name, today);
+        if(aLong > 0) {
+            return restaurantRepository.findTodayRestaurant(name, today);
+        }else{
+            Restaurant restaurant = new Restaurant(name, today);
+            restaurantRepository.save(restaurant);
+            return restaurant;
         }
     }
 
@@ -78,7 +107,6 @@ public class ConnectionService {
         JsonArray resultArray = jsonObject.getAsJsonArray("RESULT");
         JsonElement element = resultArray.get(0);
         JsonObject entry = element.getAsJsonObject();
-        int client = entry.get("CLIENT").getAsInt();
         String rawTime = entry.get("CRT_DT").getAsString();
         String time = rawTime.substring(0, 4)+"-"+rawTime.substring(4, 6)+
                 "-"+rawTime.substring(6, 8)+" "+rawTime.substring(8, 10)+
@@ -98,7 +126,7 @@ public class ConnectionService {
             String location = entry.get("LOCATION").getAsString();
 
 
-            location = changeRestaurantNameforWifi(location);
+            location = changeRestaurantNameForCashing(location);
             if(location.equals("NULL")) continue;
 
             int client = entry.get("CLIENT").getAsInt();
@@ -150,24 +178,22 @@ public class ConnectionService {
         return json;
     }
 
-    public String changeRestaurantNameforWifi(String name){
-        String res = "NULL";
-        if(name.contains("Je1")) res= "1학생회관";
-        else if(name.contains("제2학생회관")) res= "2학생회관";
-        else if(name.contains("Je3_Hak") || name.contains("3학생")) res= "3학생회관";
-        else if(name.contains("제4학생")) res= "상록회관";
-        else if(name.contains("생활과학대 1F")) res= "생활과학대";
-        return res;
+    public String changeRestaurantNameForCashing(String name){
+        if(name.contains("Je1")) return "1학생회관";
+        else if(name.contains("제2학생회관")) return "2학생회관";
+        else if(name.contains("Je3_Hak") || name.contains("3학생")) return "3학생회관";
+        else if(name.contains("제4학생")) return "상록회관";
+        else if(name.contains("생활과학대 1F")) return "생활과학대";
+        else return "NULL";
     }
 
 
     public String changeRestaurantName(String name){
-        String res = name;
-        if(name.contains("1")) res= "1학생회관";
-        else if(name.contains("2")) res= "2학생회관";
-        else if(name.contains("3")) res= "3학생회관";
-        else if(name.contains("4")) res= "상록회관";
-        else if(name.contains("5")) res= "생활과학대";
-        return res;
+        if(name.contains("1")) return "1학생회관";
+        else if(name.contains("2")) return "2학생회관";
+        else if(name.contains("3")) return "3학생회관";
+        else if(name.contains("4")) return "상록회관";
+        else if(name.contains("5")) return "생활과학대";
+        return "Null";
     }
 }
