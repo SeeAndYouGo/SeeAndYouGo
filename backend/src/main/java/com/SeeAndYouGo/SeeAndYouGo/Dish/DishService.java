@@ -35,8 +35,8 @@ public class DishService {
 
     @Transactional
     @Scheduled(cron="0 0 0 * * SAT")
-    public void saveAndCashWeekDish() throws Exception{
-        String wifiInfo = fetchDishInfoToString();
+    public void saveAndCashWeekDish(Integer page) throws Exception{
+        String wifiInfo = fetchDishInfoToString(page);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate monday = LocalDate.now().with(DayOfWeek.MONDAY);
         LocalDate friday  = LocalDate.now().with(DayOfWeek.SUNDAY);
@@ -105,7 +105,7 @@ public class DishService {
             restaurantService.deleteRestaurants(localDate.toString());
         }
 
-        String wifiInfo = fetchDishInfoToString();
+        String wifiInfo = fetchDishInfoToString(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 
@@ -166,9 +166,9 @@ public class DishService {
 
 
 
-    private String fetchDishInfoToString() throws Exception {
+    private String fetchDishInfoToString(Integer page) throws Exception {
         System.out.println("1111");
-        String apiUrl = "https://api.cnu.ac.kr/svc/offcam/pub/FoodInfo?page=1&AUTH_KEY=D6E3BE404CC745B885E81D6BD5FE90CD6A59E572"; // API 엔드포인트
+        String apiUrl = "https://api.cnu.ac.kr/svc/offcam/pub/FoodInfo?page="+page+"&AUTH_KEY=D6E3BE404CC745B885E81D6BD5FE90CD6A59E572"; // API 엔드포인트
 
         // URL 생성
         URL url = new URL(apiUrl);

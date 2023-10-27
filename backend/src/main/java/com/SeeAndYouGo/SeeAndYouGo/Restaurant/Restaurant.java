@@ -21,14 +21,15 @@ public class Restaurant {
     private Long Id;
     private String name;
     private Integer capacity;
-    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Menu> menuList = new ArrayList<>();
     private String date;
-    @OneToMany(mappedBy = "connection", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Connection> connectionList = new ArrayList<>();
     private Double restaurantRate;
     private Double latitude;
     private Double longitude;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
     public Restaurant(String name, String date) {
@@ -36,7 +37,8 @@ public class Restaurant {
         this.setDate(date);
         setLatitude(name);
         setLongitude(name);
-
+        setCapacity(name);
+        this.restaurantRate = 0.0;
     }
 
     private void setLatitude(String name){
@@ -45,6 +47,14 @@ public class Restaurant {
         else if(name.contains("3학")) latitude = 3.3;
         else if(name.contains("상록")) latitude = 4.4;
         else if(name.contains("생활")) latitude = 5.5;
+    }
+
+    private void setCapacity(String name){
+        if(name.contains("1학")) capacity = 486;
+        else if(name.contains("2학")) capacity = 392;
+        else if(name.contains("3학")) capacity = 273;
+        else if(name.contains("상록")) capacity = 140;
+        else if(name.contains("생활")) capacity = 190;
     }
 
     private void setLongitude(String name){

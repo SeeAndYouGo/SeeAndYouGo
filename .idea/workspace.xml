@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7be9212-95f1-487b-9449-1aaa4c3bac29" name="Changes" comment="" />
+    <list default="true" id="f7be9212-95f1-487b-9449-1aaa4c3bac29" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/.gradle/8.2.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gradle/8.2.1/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gradle/8.2.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gradle/8.2.1/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gradle/8.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gradle/8.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gradle/8.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gradle/8.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/SeeAndYouGo/SeeAndYouGo/Dish/DishController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/SeeAndYouGo/SeeAndYouGo/Dish/DishController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/SeeAndYouGo/SeeAndYouGo/Dish/DishService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/SeeAndYouGo/SeeAndYouGo/Dish/DishService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/SeeAndYouGo/SeeAndYouGo/Restaurant/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/SeeAndYouGo/SeeAndYouGo/Restaurant/Restaurant.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
