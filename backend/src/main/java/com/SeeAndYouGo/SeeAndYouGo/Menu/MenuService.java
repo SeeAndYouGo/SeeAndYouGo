@@ -3,20 +3,9 @@ package com.SeeAndYouGo.SeeAndYouGo.Menu;
 import com.SeeAndYouGo.SeeAndYouGo.Dish.Dish;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.Restaurant;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.RestaurantRepository;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -42,9 +31,11 @@ public class MenuService {
             parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd")).toString();
         }catch(Exception e){}
 
+        System.out.println(parseRestaurantName);
+        System.out.println(parsedDate);
         Restaurant restaurant = restaurantRepository.findTodayRestaurant(parseRestaurantName, parsedDate);
-        System.out.println(restaurant.getMenuList());
-        return restaurant.getMenuList();
+        System.out.println(restaurant);
+        return extractNotLunch(restaurant.getMenuList());
     }
 
     public List<Menu>[] getOneWeekRestaurantMenu(String placeName, String date) {
@@ -60,11 +51,36 @@ public class MenuService {
         for(LocalDate i = startOfWeek; i.compareTo(endOfWeek) <= 0; i = i.plusDays(1)){
             weekMenuList[++idx] = getOneDayRestaurantMenu(placeName, i.toString());
         }
-
         return weekMenuList;
     }
 
+//    private List<Menu>[] extractNotLunch(List<Menu>[] weekMenuList) {
+//        List<Menu>[] weekMenusLunch = new List[weekMenuList.length];
+//
+//        int idx = 0;
+//        for (List<Menu> menusLunch : weekMenusLunch) {
+//
+//            for (Menu menu : menusLunch) {
+//                if(!containDinner(menu))
+//                    menusLunch.remove(menu);
+//            }
+//            weekMenusLunch[idx++] = menusLunch;
+//        }
+//        return weekMenusLunch;
+//    }
 
+    private static boolean containDinner(Menu menu) {
+        return menu.getMenuType().equals(MenuType.LUNCH);
+    }
+
+    private List<Menu> extractNotLunch(List<Menu> weekMenuList) {
+        List<Menu> weekLunchMenus = new ArrayList<>();
+        for (Menu menu : weekMenuList) {
+            if(containDinner(menu))
+                weekLunchMenus.add(menu);
+        }
+        return weekLunchMenus;
+    }
 
     public String parseRestaurantName(String name) {
         if (name.contains("1")) return "1학생회관";

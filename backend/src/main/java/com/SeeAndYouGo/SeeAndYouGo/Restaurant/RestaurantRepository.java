@@ -66,6 +66,7 @@ public class RestaurantRepository {
         );
         query.setParameter("name", name);
         query.setParameter("date", today);
+
         return query.getSingleResult();
     }
     public Restaurant findByName(String name) {
@@ -77,7 +78,7 @@ public class RestaurantRepository {
             return null;
         }
     }
-    @Query("SELECT e FROM Employee e WHERE e.department = :department")
+    @Query("SELECT r FROM Restaurant r WHERE r.date = :date")
     public void deleteRestaurantsMatchedDate(@Param("date") String date) {}
 
 }
