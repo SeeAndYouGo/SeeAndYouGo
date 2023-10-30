@@ -1,6 +1,7 @@
 package com.SeeAndYouGo.SeeAndYouGo.Menu;
 
 import com.SeeAndYouGo.SeeAndYouGo.Dish.Dish;
+import com.SeeAndYouGo.SeeAndYouGo.Dish.DishType;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.Restaurant;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +32,28 @@ public class MenuService {
             parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd")).toString();
         }catch(Exception e){}
 
-        System.out.println(parseRestaurantName);
-        System.out.println(parsedDate);
         Restaurant restaurant = restaurantRepository.findTodayRestaurant(parseRestaurantName, parsedDate);
-        System.out.println(restaurant);
-        return extractNotLunch(restaurant.getMenuList());
+        List<Menu> menus = extractNotLunch(restaurant.getMenuList());
+
+        return sortMainDish(menus);
     }
 
+    private List<Menu> sortMainDish(List<Menu> menus) {
+        List<Menu> sortMenus = new ArrayList<>();
+
+        for (Menu menu : menus) {
+            List<Dish> dishList = new ArrayList<>();
+            for (Dish dish : menu.getDishList()) {
+                if(dish.getDishType().equals(DishType.MAIN))
+                    dishList.add(0, dish);
+                else
+                    dishList.add(dish);
+            }
+            menu.setDishList(dishList);
+            sortMenus.add(menu);
+        }
+        return sortMenus;
+    }
     public List<Menu>[] getOneWeekRestaurantMenu(String placeName, String date) {
         // 날짜 문자열을 파싱
         LocalDate parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -92,7 +108,7 @@ public class MenuService {
     }
 
     @Transactional
-    public List<Menu> createMenuWithDishses(List<Dish> dishes) {
+    public List<Menu> createMenuWithDishs(List<Dish> dishes) {
         Map<String, Menu> responseMap = new HashMap<>();
 
         for (Dish dish : dishes) {

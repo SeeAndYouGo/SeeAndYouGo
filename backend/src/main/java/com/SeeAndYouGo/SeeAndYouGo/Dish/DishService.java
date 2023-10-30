@@ -1,9 +1,6 @@
 package com.SeeAndYouGo.SeeAndYouGo.Dish;
 
-import com.SeeAndYouGo.SeeAndYouGo.Menu.Dept;
-import com.SeeAndYouGo.SeeAndYouGo.Menu.Menu;
-import com.SeeAndYouGo.SeeAndYouGo.Menu.MenuService;
-import com.SeeAndYouGo.SeeAndYouGo.Menu.MenuType;
+import com.SeeAndYouGo.SeeAndYouGo.Menu.*;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.Restaurant;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.RestaurantRepository;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.RestaurantService;
@@ -34,6 +31,7 @@ public class DishService {
     private final MenuService menuService;
     private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository;
+    private final MenuRepository menuRepository;
 
     @Transactional
     @Scheduled(cron="0 0 0 * * SAT")
@@ -84,7 +82,7 @@ public class DishService {
             }else continue;
         }
         // 오늘 날짜의 Dish를 만들었으면, 이걸 기준으로 Menu를 만든다.
-        List<Menu> menus = menuService.createMenuWithDishses(dishes);
+        List<Menu> menus = menuService.createMenuWithDishs(dishes);
         for (Dish dish : dishes) {
             for (Menu menu : menus) {
                 if(menu.getDishList().contains(dish)){
@@ -154,7 +152,7 @@ public class DishService {
             }else continue;
         }
         // 오늘 날짜의 Dish를 만들었으면, 이걸 기준으로 Menu를 만든다.
-        List<Menu> menus = menuService.createMenuWithDishses(dishes);
+        List<Menu> menus = menuService.createMenuWithDishs(dishes);
         for (Dish dish : dishes) {
             for (Menu menu : menus) {
                 if(menu.getDishList().contains(dish)){
@@ -202,7 +200,6 @@ public class DishService {
 
     @Transactional
     public void updateMainDish(List<MainDishResponse> mainDishResponses) {
-
         for (MainDishResponse mainDishResponse : mainDishResponses) {
             String mainDishName = mainDishResponse.getMainDishName();
             String date = mainDishResponse.getDate();
@@ -211,7 +208,6 @@ public class DishService {
 
             Dish dish = dishRepository.findByDishIdentifier(restaurantName, mainDishName, dept, date);
             dish.setDishType(DishType.MAIN);
-
             dishRepository.save(dish);
         }
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -78,8 +79,9 @@ public class RestaurantRepository {
             return null;
         }
     }
-    @Query("SELECT r FROM Restaurant r WHERE r.date = :date")
-    public void deleteRestaurantsMatchedDate(@Param("date") String date) {}
+
+    public void deleteRestaurantsMatchedDate(String date) {
+    }
 
     public List<Restaurant> findTodayAllRestaurant(String name, String date) {
 
