@@ -1,15 +1,17 @@
 package com.SeeAndYouGo.SeeAndYouGo.Review;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ReviewRequestDto {
-    private String restaurant;
-    private String writer;
-    private String comment;
-    private Double rate;
+    public String restaurant;
+    public String writer;
+    public String comment;
+    public Double rate;
 
     public ReviewRequestDto(String restaurant, String writer, String comment, Double rate) {
         this.restaurant = restaurant;

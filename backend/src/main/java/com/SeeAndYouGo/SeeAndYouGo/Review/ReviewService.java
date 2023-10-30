@@ -1,6 +1,7 @@
 package com.SeeAndYouGo.SeeAndYouGo.Review;
 
 import com.SeeAndYouGo.SeeAndYouGo.Menu.Menu;
+import com.SeeAndYouGo.SeeAndYouGo.Menu.MenuService;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.Restaurant;
 import com.SeeAndYouGo.SeeAndYouGo.Restaurant.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,11 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
+    private final MenuService menuService;
 
     @Transactional
     public Long registerReview(Review review, String restaurantName) {
+        restaurantName = menuService.parseRestaurantName(restaurantName);
         Restaurant restaurant = restaurantRepository.findTodayRestaurant(restaurantName, LocalDate.now().toString());
         if (restaurant == null) {
             throw new IllegalArgumentException("Restaurant not found for name: " + restaurantName);
