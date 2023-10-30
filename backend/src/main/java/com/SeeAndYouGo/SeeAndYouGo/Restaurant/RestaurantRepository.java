@@ -57,7 +57,7 @@ public class RestaurantRepository {
         return query.getSingleResult();
     }
 
-    public Restaurant findTodayRestaurant(String name, String today) {
+    public Restaurant findTodayRestaurant(String name, String date) {
 
         TypedQuery<Restaurant> query = em.createQuery(
                 "SELECT r FROM Restaurant r " +
@@ -65,7 +65,7 @@ public class RestaurantRepository {
                 Restaurant.class
         );
         query.setParameter("name", name);
-        query.setParameter("date", today);
+        query.setParameter("date", date);
 
         return query.getSingleResult();
     }
@@ -81,7 +81,7 @@ public class RestaurantRepository {
     @Query("SELECT r FROM Restaurant r WHERE r.date = :date")
     public void deleteRestaurantsMatchedDate(@Param("date") String date) {}
 
-    public List<Restaurant> findTodayAllRestaurant(String name, String today) {
+    public List<Restaurant> findTodayAllRestaurant(String name, String date) {
 
         TypedQuery<Restaurant> query = em.createQuery(
                 "SELECT r FROM Restaurant r " +
@@ -89,7 +89,7 @@ public class RestaurantRepository {
                 Restaurant.class
         );
         query.setParameter("name", name);
-        query.setParameter("date", today);
+        query.setParameter("date", date);
         return query.getResultList();
     }
 
