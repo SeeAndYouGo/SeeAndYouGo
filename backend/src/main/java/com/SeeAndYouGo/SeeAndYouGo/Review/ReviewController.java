@@ -20,23 +20,22 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final MenuService menuService;
 
-    // 탑 리뷰 조회
-    @GetMapping("/top5Review/{restaurant}")
-    public List<ReviewDto> getTopReviews(@PathVariable String restaurant) {
-        restaurant = menuService.parseRestaurantName(restaurant);
-
-        String date = LocalDate.now().toString();
-        List<Review> reviews = reviewService.findTopReviewsByRestaurantAndDate(restaurant, date);
-
-        List<ReviewDto> response = new ArrayList<>();
-        for (Review review : reviews) {
-            response.add( ReviewDto.of(review) );
-        }
-
-        return response;
+    // 탑 리뷰5개 조회        --------api명세 및 로직수정
+    @GetMapping("/top5Review/restaurant{number}")
+    public ResponseEntity<List<Review>> getTopReviews(@PathVariable String number) {
+        List<Review> reviews = reviewService.findTopReviewsByRestaurant("restaurant"+number);
+        return ResponseEntity.ok(reviews);
     }
 
-    @GetMapping
+    //각 식당 전체 리뷰 조회      ---------추가
+    @GetMapping("/review/restaurant{number}")
+    public List<Review> getRestaurantReviews(@PathVariable String number) {
+        return reviewService.findRestaurantReviews("restaurant"+number);
+    }
+
+
+    //전체식당 통합 리뷰조회      ---api명세수정
+    @GetMapping("/totalReview")
     public List<Review> getAllReviews() {
         return reviewService.findAllReviews();
     }

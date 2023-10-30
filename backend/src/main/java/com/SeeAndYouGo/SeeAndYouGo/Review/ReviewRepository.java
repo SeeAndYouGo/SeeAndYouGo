@@ -113,3 +113,30 @@ public class ReviewRepository {
     }
 
 }
+
+
+    public List<Review> getRestaurantReviews(String name) {
+        return em.createQuery("SELECT r FROM Review r WHERE r.restaurant.name = :restaurantName", Review.class)
+                .setParameter("restaurantName", name)
+                .getResultList();
+    }
+
+    public void delete(Review review) {
+        em.remove(review);
+    }
+
+    public List<Review> findTopReviewsByRestaurant(String name) {
+        LocalDateTime startDate = LocalDate.now().atStartOfDay();
+        LocalDateTime endDate = LocalDate.now().atTime(23, 59, 59);
+
+        return em.createQuery("select r from Review r " +
+                        "where r.restaurant.name = :restaurantName " +
+                        "and r.madeTime between :startDate " +
+                        "and :endDate order by r.madeTime desc", Review.class)
+                .setParameter("restaurantName", name)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .setMaxResults(5)
+                .getResultList();
+    }
+}

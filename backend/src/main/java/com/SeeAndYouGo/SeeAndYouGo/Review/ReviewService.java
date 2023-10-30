@@ -100,3 +100,17 @@ public class ReviewService {
 //        reviewRepository.delete(review);
 //    }
 }
+
+    public List<Review> findTopReviewsByRestaurant(String name) {
+        return reviewRepository.findTopReviewsByRestaurant(name);
+    }
+
+    public void delete(Review review) {
+        reviewRepository.delete(review);
+    }
+
+    public List<Review> findRestaurantReviews(String name) {
+        return reviewRepository.getRestaurantReviews(name);
+    }
+
+}
