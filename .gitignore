@@ -6,6 +6,7 @@
 **/.idea
 **/.gradle
 **/build
+**/data
 
 ### Java ###
 # Compiled class file
