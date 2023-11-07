@@ -99,7 +99,7 @@ public class ReviewService {
 //    public void delete(Review review) {
 //        reviewRepository.delete(review);
 //    }
-}
+
 
     public List<Review> findTopReviewsByRestaurant(String name) {
         return reviewRepository.findTopReviewsByRestaurant(name);

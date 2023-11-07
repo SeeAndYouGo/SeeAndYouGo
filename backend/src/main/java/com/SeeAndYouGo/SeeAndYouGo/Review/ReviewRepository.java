@@ -32,8 +32,8 @@ public class ReviewRepository {
         return Optional.ofNullable(review);
     }
 
-    public List<Review> findAll() {
-        return em.createQuery("select  r from Review r", Review.class)
+    public List<Review> findAll() {//최신순
+        return em.createQuery("SELECT r FROM Review r ORDER BY r.madeTime DESC", Review.class)
                 .getResultList();
     }
 
@@ -84,12 +84,11 @@ public class ReviewRepository {
     }
 
 
-
     public List<Review> findTopReviewsByRestaurantAndDate(String restaurantName, String date) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate parsedDate = LocalDate.parse(date, dateFormatter);
-        LocalDateTime startDate = parsedDate.atTime(0,0,0); //.atStartOfDay();
+        LocalDateTime startDate = parsedDate.atTime(0, 0, 0); //.atStartOfDay();
         LocalDateTime endDate = parsedDate.atTime(23, 59, 59);
 
 //        return em.createQuery("select r from Review r " +
@@ -112,11 +111,11 @@ public class ReviewRepository {
         return reviewTypedQuery.getResultList();
     }
 
-}
 
 
-    public List<Review> getRestaurantReviews(String name) {
-        return em.createQuery("SELECT r FROM Review r WHERE r.restaurant.name = :restaurantName", Review.class)
+
+    public List<Review> getRestaurantReviews(String name) {//최신순
+        return em.createQuery("SELECT r FROM Review r WHERE r.restaurant.name = :restaurantName ORDER BY r.madeTime DESC", Review.class)
                 .setParameter("restaurantName", name)
                 .getResultList();
     }
@@ -125,7 +124,7 @@ public class ReviewRepository {
         em.remove(review);
     }
 
-    public List<Review> findTopReviewsByRestaurant(String name) {
+    public List<Review> findTopReviewsByRestaurant(String name) {//
         LocalDateTime startDate = LocalDate.now().atStartOfDay();
         LocalDateTime endDate = LocalDate.now().atTime(23, 59, 59);
 

@@ -21,14 +21,14 @@ public class ReviewController {
     private final MenuService menuService;
 
     // 탑 리뷰5개 조회        --------api명세 및 로직수정
-    @GetMapping("/top5Review/restaurant{number}")
+    @GetMapping("/topReview/restaurant{ number }")
     public ResponseEntity<List<Review>> getTopReviews(@PathVariable String number) {
         List<Review> reviews = reviewService.findTopReviewsByRestaurant("restaurant"+number);
         return ResponseEntity.ok(reviews);
     }
 
     //각 식당 전체 리뷰 조회      ---------추가
-    @GetMapping("/review/restaurant{number}")
+    @GetMapping("/review/restaurant{ number }")
     public List<Review> getRestaurantReviews(@PathVariable String number) {
         return reviewService.findRestaurantReviews("restaurant"+number);
     }
