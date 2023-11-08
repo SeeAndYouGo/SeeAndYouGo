@@ -32,15 +32,23 @@ public class ReviewController {
         String date = LocalDate.now().toString();
         List<Review> reviews = reviewService.findTopReviewsByRestaurantAndDate(restaurant, date);
 
-        List<ReviewDto> response = new ArrayList<>();
-        reviews.forEach(review -> response.add(ReviewDto.of(review)));
+        List<ReviewDto> response = getReviewDtos(reviews);
 
         return response;
     }
 
-    @GetMapping
-    public List<Review> getAllReviews() {
-        return reviewService.findAllReviews();
+    private static List<ReviewDto> getReviewDtos(List<Review> reviews) {
+        List<ReviewDto> response = new ArrayList<>();
+        reviews.forEach(review -> response.add(ReviewDto.of(review)));
+        return response;
+    }
+
+    @GetMapping("/totalReview")
+    public List<ReviewDto> getAllReviews() {
+        String date = LocalDate.now().toString();
+        List<Review> allReviews = reviewService.findAllReviews(date);
+
+        return getReviewDtos(allReviews);
     }
 
     // 리뷰 게시

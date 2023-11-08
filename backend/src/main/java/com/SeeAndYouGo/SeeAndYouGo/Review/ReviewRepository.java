@@ -94,12 +94,20 @@ public class ReviewRepository {
         TypedQuery<Review> reviewTypedQuery = em.createQuery(
                 "select r from Review r " +
                         "where r.restaurant.name = :restaurantName " +
-                        "and SUBSTR(r.madeTime,0, 10) = SUBSTR(:startDate,0, 10) " +
+                        "and FUNCTION('SUBSTRING', r.madeTime, 1, 10) = FUNCTION('SUBSTRING', :date, 1, 10) " +
                         "order by r.madeTime desc", Review.class)
                 .setParameter("restaurantName", restaurantName)
-                .setParameter("startDate", startDate)
+                .setParameter("date", startDate)
                 .setMaxResults(5);
         return reviewTypedQuery.getResultList();
     }
 
+    public List<Review> findAllByMadeTime(String date) {
+        TypedQuery<Review> reviewTypedQuery = em.createQuery(
+                        "select r from Review r " +
+                                "where FUNCTION('SUBSTRING', r.madeTime, 1, 10) = FUNCTION('SUBSTRING', :date, 1, 10) " +
+                                "order by r.madeTime desc", Review.class)
+                .setParameter("date", date);
+        return reviewTypedQuery.getResultList();
+    }
 }

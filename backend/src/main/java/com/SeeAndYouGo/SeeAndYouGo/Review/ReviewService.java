@@ -51,8 +51,8 @@ public class ReviewService {
     }
 
 
-    public List<Review> findAllReviews() {
-        return reviewRepository.findAll();
+    public List<Review> findAllReviews(String date) {
+        return reviewRepository.findAllByMadeTime(date);
     }
 
     public List<Review> findReviewsByWriter(String writer) {
