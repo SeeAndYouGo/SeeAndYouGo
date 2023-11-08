@@ -90,22 +90,12 @@ public class ReviewRepository {
 
         LocalDate parsedDate = LocalDate.parse(date, dateFormatter);
         LocalDateTime startDate = parsedDate.atTime(0,0,0); //.atStartOfDay();
-        LocalDateTime endDate = parsedDate.atTime(23, 59, 59);
 
-//        return em.createQuery("select r from Review r " +
-//                        "where r.restaurant.name = :restaurantName " +
-//                        "and FORMATDATETIME(r.madeTime, '%Y-%m-%d') between FORMATDATETIME(:startDate,'%Y-%m-%dT%TZ') " +
-//                        "and FORMATDATETIME(:endDate,'%Y-%m-%dT%TZ') order by r.reviewRate desc, r.likeCount desc", Review.class)
-//                .setParameter("restaurantName", restaurantName)
-//                .setParameter("startDate", startDate)
-//                .setParameter("endDate", endDate)
-//                .setMaxResults(5)
-//                .getResultList();
-
-        TypedQuery<Review> reviewTypedQuery = em.createQuery("select r from Review r " +
+        TypedQuery<Review> reviewTypedQuery = em.createQuery(
+                "select r from Review r " +
                         "where r.restaurant.name = :restaurantName " +
-                        "and SUBSTRING(r.madeTime,0, 10) = SUBSTRING(:startDate,0, 10)" +
-                        "order by r.reviewRate desc, r.likeCount desc", Review.class)
+                        "and SUBSTR(r.madeTime,0, 10) = SUBSTR(:startDate,0, 10) " +
+                        "order by r.madeTime desc", Review.class)
                 .setParameter("restaurantName", restaurantName)
                 .setParameter("startDate", startDate)
                 .setMaxResults(5);

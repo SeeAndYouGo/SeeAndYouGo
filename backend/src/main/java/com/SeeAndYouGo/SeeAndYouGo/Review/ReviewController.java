@@ -33,9 +33,7 @@ public class ReviewController {
         List<Review> reviews = reviewService.findTopReviewsByRestaurantAndDate(restaurant, date);
 
         List<ReviewDto> response = new ArrayList<>();
-        for (Review review : reviews) {
-            response.add( ReviewDto.of(review) );
-        }
+        reviews.forEach(review -> response.add(ReviewDto.of(review)));
 
         return response;
     }
@@ -56,7 +54,7 @@ public class ReviewController {
         }
 
         // 원하는 날짜 및 시간 형식을 정의합니다.
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd hh:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
         
 
         review.setWriter(requestDto.getWriter());
