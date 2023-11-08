@@ -100,6 +100,10 @@ public class ReviewService {
     public List<Review> findTopReviewsByRestaurantAndDate(String restaurantName, String date) {
         return reviewRepository.findTopReviewsByRestaurantAndDate(restaurantName, date);
     }
+
+    public List<Review> findRestaurantReviews(String restaurant, String date) {
+        return reviewRepository.findReviewsByRestaurantAndDate(restaurant, date);
+    }
 //    public void delete(Review review) {
 //        reviewRepository.delete(review);
 //    }
