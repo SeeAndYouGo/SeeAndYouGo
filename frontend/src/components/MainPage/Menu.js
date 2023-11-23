@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 
 const MenuContainer = styled.div`
@@ -77,12 +76,6 @@ const Menu = ({ value }) => {
 							{menu}
 						</p>
 					)
-					// <p
-					// 	key={index}
-					// 	style={{ margin: 0, fontSize: 15, fontWeight: 400 }}
-					// >
-					// 	{menu}
-					// </p>
 				))}
 			</div>
 		</MenuContainer>

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
+import ReviewList from "./ReviewList";
 
 const MyRadio = styled.input`
 	margin-left: 10px;
@@ -48,8 +49,8 @@ const ReviewMenuInfo = ({ idx }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			// const nowUrl = `/api/dailyMenu/restaurant${idx}`;
-			const nowUrl = `http://27.96.131.182/api/dailyMenu/restaurant${idx}`;
-			// const nowUrl = "/assets/json/myMenu.json";
+			// const nowUrl = `http://27.96.131.182/api/dailyMenu/restaurant${idx}`;
+			const nowUrl = "/assets/json/myMenu.json";
 			const res = await fetch(nowUrl, {
 				headers: {
 					"Content-Type": "application/json",
@@ -113,11 +114,12 @@ const ReviewMenuInfo = ({ idx }) => {
 					{menuData.map((nowValue, index) => {
 						if (radioValue === "menu1") {
 							return index === 1 ? null : (
-								<MenuInfo
-									mainMenu={nowValue.dishList[0]}
-									subMenu={nowValue.dishList.slice(1)}
-									key={index}
-								/>
+								<div key={index}>
+									<MenuInfo
+										mainMenu={nowValue.dishList[0]}
+										subMenu={nowValue.dishList.slice(1)}
+									/>
+								</div>
 							);
 						} else {
 							return index === 0 ? null : (
@@ -130,6 +132,7 @@ const ReviewMenuInfo = ({ idx }) => {
 						}
 					})}
 				</div>
+				{<ReviewList idx={idx} nowDept={radioValue === "menu1" ? "STUDENT":"STAFF"}/>}
 			</div>
 		</>
 	);

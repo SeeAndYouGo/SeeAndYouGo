@@ -123,8 +123,8 @@ const ReviewItem = ({
 									</RestaurantName>
 									<DeptName>
 										{dept === "STAFF"
-											? "교직원식당"
-											: "학생식당"}
+											? "교직원"
+											: "학생"}
 									</DeptName>
 								</div>
 							)}
