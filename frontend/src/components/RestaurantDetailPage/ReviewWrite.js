@@ -60,6 +60,7 @@ const ReviewWriteCamera = styled.label`
 	line-height: 35px;
 	cursor: pointer;
 `;
+
 const ReviewWriteButton = styled.button`
 	width: 100%;
 	margin-top: 10px;
@@ -151,6 +152,7 @@ const ReviewWriteForm = ({ restaurantName, deptName, nowMainMenu }) => {
 			{restaurantName === 1 ? (
 				<MenuSelector onSelectMenu={handleSelectMenu} />
 			) : null}
+
 			<div style={{ width: "50%", float: "left" }}>
 				<p style={{ margin: "0", float: "left", fontSize: 15 }}>별점</p>
 				<ReviewStarRating>
@@ -209,6 +211,7 @@ const ReviewWriteForm = ({ restaurantName, deptName, nowMainMenu }) => {
 						maxLength={6}
 						placeholder={"닉네임"}
 						value={writerName}
+
 						style={{
 							height: 30,
 							float: "left",

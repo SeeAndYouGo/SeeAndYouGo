@@ -1,12 +1,13 @@
 [
     { 
-        "restaurant": "2학생회관",
-        "dept": "STAFF",
-        "madeTime": "2023-10-14 12:30:00",
+        "restaurant": "1학생회관",
+        "dept": "교직원",
+        "madeTime": "20231014 14:03",
         "writer": "배고픈 학생1",
         "rate": 4.0,
-        "comment": "맛있어요!",
-        "imgLink": "ReviewSample1.jpg"
+        "comment": "맛있어요...!",
+        "image": "ReviewSample1.jpg",
+        "menuName" : "생우동"
     },
     {
         "restaurant": "2학생회관",
@@ -18,9 +19,9 @@
         "imgLink": ""
     },
     { 
-        "restaurant": "2학생회관",
-        "dept": "STAFF",
-        "madeTime": "2023-10-14 14:00:00",
+        "restaurant": "3학생회관",
+        "dept": "교직원",
+        "madeTime": "20231014 14:33",
         "writer": "배고픈 학생3",
         "rate": 3.5,
         "comment": "낫배드",

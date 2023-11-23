@@ -50,8 +50,8 @@ const TypeSelect = ({ idx }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			// const nowUrl = `/api/dailyMenu/restaurant${idx}`;
-			// const nowUrl = `http://27.96.131.182/api/dailyMenu/restaurant${idx}`;
-			const nowUrl = "/assets/json/myMenu.json";
+			const nowUrl = `http://27.96.131.182/api/dailyMenu/restaurant${idx}`;
+			// const nowUrl = "/assets/json/myMenu.json";
 			const res = await fetch(nowUrl, {
 				headers: {
 					"Content-Type": "application/json",

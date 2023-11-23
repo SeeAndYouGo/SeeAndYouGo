@@ -101,6 +101,7 @@ const ReviewItem = ({ user, time, content, img, rate, dept }) => {
 						{dept === "STAFF" ? "교직원" : "학생"}
 					</DeptName>
 				</div>
+
 			</div>
 			<div className="Row2" style={{ float: "left", width: "100%" }}>
 				<ReviewItemContent>{content}</ReviewItemContent>
@@ -132,8 +133,8 @@ const TopReview = ({ idx }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			// const nowUrl = `http://localhost:8080/api/topReview/restaurant${idx}`;
-			// const nowUrl = `http://27.96.131.182/api/topReview/restaurant${idx}`;
-			const nowUrl = "/assets/json/restaurant1Review.json";
+			const nowUrl = `http://27.96.131.182/api/topReview/restaurant${idx}`;
+			// const nowUrl = "/assets/json/restaurant1Review.json";
 			const res = await fetch(nowUrl, {
 				headers: {
 					"Content-Type": "application/json",
