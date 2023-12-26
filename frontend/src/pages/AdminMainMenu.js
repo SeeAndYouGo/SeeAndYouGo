@@ -10,11 +10,11 @@ const AdminMainMenu = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const url =
-			config.BASE_URL +
-			"/weeklyMenu" +
-			(config.NOW_STATUS === 0 ? ".json" : "");
+				config.BASE_URL +
+				"/weeklyMenu" +
+				(config.NOW_STATUS === 0 ? ".json" : "");
 
-		const res = await fetch(url, {
+			const res = await fetch(url, {
 				headers: {
 					"Content-Type": "application/json",
 				},
