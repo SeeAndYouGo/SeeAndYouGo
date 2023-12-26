@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class SeeAndYouGoApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(SeeAndYouGoApplication.class);
 		ApplicationContext context = app.run(SeeAndYouGoApplication.class, args);
 //		DataLoader dataLoader = context.getBean(DataLoader.class);
